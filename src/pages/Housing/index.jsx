@@ -1,4 +1,3 @@
-import React from "react";
 import Collapse from "../../components/Collapse";
 import { useParams } from "react-router-dom";
 import "../../index.scss";
@@ -7,48 +6,27 @@ import ProfilePicture from "../../components/ProfilePicture";
 import Rating from "../../components/Rating";
 import Carrousel from "../../components/Carrousel";
 import NotFound from "../../pages/NotFound";
+import useFetch from "../../hooks/useFetch";
 
 export default function Housing() {
 	const { id } = useParams();
-	const [data, setData] = React.useState();
-	const [error, setError] = React.useState();
+	const { data, error } = useFetch("../data.json");
+	const lodging = data && data.find((d) => d.id === id);
 
-	function filterData(datas) {
-		let filteredData;
-		filteredData = datas.filter((d) => d.id === id);
-		if (filteredData.length === 0) {
-			setError(true);
-		} else {
-			return filteredData;
-		}
-	}
-	React.useEffect(() => {
-		async function getData() {
-			try {
-				const response = await fetch("../data.json");
-				const datas = await response.json();
-				setData(filterData(datas));
-			} catch (err) {
-				setError(true);
-			}
-		}
-		getData();
-	}, []);
-
-	if (error) {
+	if (error || (data && !lodging)) {
 		return <NotFound />;
-	} else if (data) {
+	} else if (lodging) {
 		return (
 			<main>
 				<article className="estate">
-					<Carrousel slides={data[0].pictures} />
+					<Carrousel slides={lodging.pictures} />
 					<section className="estate-details">
 						<div className="estate-details-header">
 							<div className="estate-title-container">
-								<h1>{data[0].title}</h1>
-								<p>{data[0].location}</p>
+								<h1>{lodging.title}</h1>
+								<p>{lodging.location}</p>
 								<ul className="tag-container">
-									{data[0].tags.map((tag, index) => {
+									{lodging.tags.map((tag, index) => {
 										return (
 											<li key={index} className="tag">
 												{tag}
@@ -59,19 +37,19 @@ export default function Housing() {
 							</div>
 							<div className="estate-owner-container">
 								<ProfilePicture
-									picture={data[0].host.picture}
-									name={data[0].host.name}
+									picture={lodging.host.picture}
+									name={lodging.host.name}
 								/>
-								<Rating rating={data[0].rating} />
+								<Rating rating={lodging.rating} />
 							</div>
 						</div>
 						<div className="estate-collapsibles">
 							<Collapse title={"Description"}>
-								<p>{data[0].description}</p>
+								<p>{lodging.description}</p>
 							</Collapse>
 							<Collapse title={"Équipements"}>
 								<ul>
-									{data[0].equipments.map((equipment, index) => {
+									{lodging.equipments.map((equipment, index) => {
 										return <li key={index}>{equipment}</li>;
 									})}
 								</ul>
