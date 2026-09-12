@@ -12,16 +12,19 @@ function Collapse({ title, children }) {
 
 	return (
 		<div className="collapse-container">
-			<button
-				type="button"
-				className="collapse-title"
-				onClick={toggle}
-				aria-expanded={open}
-				aria-controls={contentId}
-			>
-				<span>{title}</span>
-				<img src={arrow} className={open ? "arrow down" : "arrow up"} alt="" />
-			</button>
+			{/* toute la barre ouvre le bloc ; le bouton reste la cible clavier,
+			    son clic remonte jusqu'ici */}
+			<div className="collapse-title" onClick={toggle}>
+				<p>{title}</p>
+				<button
+					type="button"
+					aria-expanded={open}
+					aria-controls={contentId}
+					aria-label={(open ? "Fermer" : "Ouvrir") + " " + title}
+				>
+					<img src={arrow} className={open ? "arrow down" : "arrow up"} alt="" />
+				</button>
+			</div>
 
 			<div
 				id={contentId}

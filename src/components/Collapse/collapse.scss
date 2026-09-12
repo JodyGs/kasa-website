@@ -8,16 +8,12 @@
 	align-items: center;
 	padding: 5px 17px 5px 17px;
 	box-sizing: border-box;
-	// toute la barre est le bouton : un clic n'importe ou ouvre le bloc
-	width: 100%;
-	border: none;
-	font-family: inherit;
-	text-align: left;
+	// toute la barre est cliquable, pas seulement la fleche
 	cursor: pointer;
 	@media (max-width: 769px) {
 		padding: 5px 10px 5px 10px;
 	}
-	span {
+	p {
 		color: #fff;
 		font-size: 24px;
 	}
