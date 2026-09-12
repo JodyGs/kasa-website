@@ -8,10 +8,16 @@
 	align-items: center;
 	padding: 5px 17px 5px 17px;
 	box-sizing: border-box;
+	// toute la barre est le bouton : un clic n'importe ou ouvre le bloc
+	width: 100%;
+	border: none;
+	font-family: inherit;
+	text-align: left;
+	cursor: pointer;
 	@media (max-width: 769px) {
 		padding: 5px 10px 5px 10px;
 	}
-	p {
+	span {
 		color: #fff;
 		font-size: 24px;
 	}

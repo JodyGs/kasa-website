@@ -8,27 +8,23 @@ function Collapse({ title, children }) {
 		setOpen(!open);
 	};
 	const contentRef = React.useRef();
+	const contentId = React.useId();
 
 	return (
 		<div className="collapse-container">
-			<div className="collapse-title">
-				<p>{title}</p>
-				<button
-					aria-expanded={open ? "true" : "false"}
-					aria-controls="collapse-parent"
-					aria-label="open this collapse"
-				>
-					<img
-						src={arrow}
-						className={open ? "arrow down" : "arrow up"}
-						alt="Ouvrir l'article"
-						onClick={toggle}
-					/>
-				</button>
-			</div>
+			<button
+				type="button"
+				className="collapse-title"
+				onClick={toggle}
+				aria-expanded={open}
+				aria-controls={contentId}
+			>
+				<span>{title}</span>
+				<img src={arrow} className={open ? "arrow down" : "arrow up"} alt="" />
+			</button>
 
 			<div
-				id="collapse-parent"
+				id={contentId}
 				className={open ? "collapse-parent show" : "collapse-parent hide"}
 				ref={contentRef}
 				style={
